@@ -26,24 +26,17 @@ public class Scores_Chapter10 {
 			String sql = "UPDATE scores SET score_math = '95',score_english = '80' WHERE id = 5;";
 
 			try {
-				System.out.println("0(昇順)か1(降順)を入力してください：");
-				Scanner scanner = new Scanner(System.in);
 
-				// 入力内容に応じて並べ替え方向を決定
-				String order = switch (scanner.nextInt()) {
-				case 0 -> "ASC";
-				case 1 -> "DESC";
-				default -> "ASC"; // デフォルトは昇順扱い
-				};
+				Scanner scanner = new Scanner(System.in);
 
 				// SQLクエリを実行（DBMSに送信）
 				System.out.println("レコード更新:" + statement.toString());
 				int rowCnt = statement.executeUpdate(sql);
 				System.out.println(rowCnt + "件のレコードが更新されました");
 
-				// SQLクエリを準備
+				// SQLクエリを準備（並べ替え）
 				System.out.println("数学・英語の点数が高い順に並べ替えます");
-				String sqlSelect = "SELECT * FROM scores ORDER BY (score_math + score_english) " + order + ";";
+				String sqlSelect = "SELECT * FROM scores ORDER BY score_math DESC, score_english DESC;";
 				ResultSet result = statement.executeQuery(sqlSelect);
 
 				// 結果の取得と表示
